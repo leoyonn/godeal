@@ -1,9 +1,10 @@
-package model
+package godeal
 
 import (
 	//	sjson "github.com/bitly/go-simplejson"
 	json "encoding/json"
-	"fmt"
+	. "fmt"
+	"time"
 )
 
 type Jsonable interface {
@@ -38,10 +39,17 @@ type Position struct {
 }
 
 type User struct {
-	Id      int64     `json:"id"`
-	Account string    `json:"account"`
-	Pos     *Position `json:"pos"`
-	Gender  Gender    `json:"gender"`
+	Id          int64   `json:"id"`
+	Account     string  `json:"account"`
+	Name        string  `json:"name"`
+	Desc        string  `json:"desc"`
+	Gender      Gender  `json:"gender"`
+	Email       string  `json:"email"`
+	Phone       string  `json:"phone"`
+	Avatar      string  `json:"avatar"`
+	Pass        string  `json:"password"`
+	Token       string  `json:"token"`
+	CreateAt    time.Time    `json:"createAt"`
 }
 
 func (p Position) ToJson() (string, error) {
@@ -55,7 +63,7 @@ func (p Position) ToJson() (string, error) {
 func (p Position) String() string {
 	v, e := p.ToJson()
 	if e != nil {
-		return fmt.Sprintf("%v", p)
+		return Sprintf("%v", p)
 	}
 	return v
 }
@@ -71,7 +79,7 @@ func (u User) ToJson() (string, error) {
 func (u User) String() string {
 	v, e := u.ToJson()
 	if e != nil {
-		return fmt.Sprintf("%v", u)
+		return Sprintf("%v", u)
 	}
 	return v
 }

@@ -1,4 +1,4 @@
-package model
+package godeal
 
 import (
 	"testing"
@@ -6,9 +6,16 @@ import (
 	"github.com/bmizerany/assert"
 )
 
-func Test(t *testing.T) {
+func TestModel(t *testing.T) {
 	p := &Position{116.46, 39.92, "北京", "beijing..."}
-	u, u2 := &User{1, "leo", p, Male}, &User{1, "leo", p, Male}
+	u, u2 := &User {
+		Id:0, Account:"13811820678", Name:"lyso", Gender:Male, Phone:"13811820678",
+		Pass:"pass", Token:"token",
+	},
+	&User {
+		Id:0, Account:"13811820679", Name:"lyso2", Gender:Female, Phone:"13811820679",
+		Pass:"pass", Token:"token",
+	}
 	assert.Equal(t, u, u2, "nil")
 	u2.Account = "leo2"
 	assert.NotEqual(t, u, u2, "nil")

@@ -15,14 +15,14 @@ CREATE TABLE `user` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `account` varchar(32) NOT NULL,
   `name` varchar(32) NOT NULL,
-  `desc` varchar(128),
-  `gender` tinyint,
+  `desc` varchar(128) NOT NULL,
+  `gender` tinyint NOT NULL,
   `email` varchar(32) NOT NULL,
   `phone` varchar(32) NOT NULL,
-  `avatar` varchar(64) NULL,
+  `avatar` varchar(64) NOT NULL,
   `password` varchar(32) NOT NULL,
-  `passtoken` varchar(128),
-  `createAt` timestamp,
+  `token` varchar(128) NOT NULL,
+  `createAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`), UNIQUE(`account`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
