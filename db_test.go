@@ -34,8 +34,13 @@ func TestDb(t *testing.T) {
 
 	u3, e := login(u.Account, "badpass"); assert.T(t, e != nil)
 	u3, e = login(u.Account, "newpass"); assert.T(t, e == nil)
-
 	Println(u3)
 
+	u3 = &User {
+		Account:"13811820678", Name:"lyso3", Gender:Male, Token:"token", Desc: "adsfadfasd!",
+	}
+	e = update(u3); assert.T(t, e == nil)
+	u3, e = query(u3.Account); assert.T(t, e == nil)
+	Println(u3)
 }
 

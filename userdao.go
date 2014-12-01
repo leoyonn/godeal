@@ -2,6 +2,8 @@ package godeal
 
 import (
 	"errors"
+	"bytes"
+	"strconv"
 )
 
 const (
@@ -64,7 +66,40 @@ func setPass(account string, token string, newPass string, oldPass string) error
 	return nil
 }
 
-func update(user*User) error {
+func (u User) updateSql() string {
+	var buf bytes.Buffer
+	buf.WriteString("UPDATE `user` SET ")
+	buf.WriteString("`account` = \""); buf.WriteString(u.Account)
+	if u.Gender != 0 { buf.WriteString("\", `gender` = \""); buf.WriteString(strconv.Itoa(int(u.Gender))) }
+	if u.Desc != "" { buf.WriteString("\", `desc` = \""); buf.WriteString(u.Desc) }
+	if u.Name != "" { buf.WriteString("\", `name` = \""); buf.WriteString(u.Name) }
+	if u.Email != "" { buf.WriteString("\", `email` = \""); buf.WriteString(u.Email) }
+	if u.Phone != "" { buf.WriteString("\", `phone` = \""); buf.WriteString(u.Phone) }
+	if u.Avatar != "" { buf.WriteString("\", `avatar` = \""); buf.WriteString(u.Avatar) }
+	buf.WriteString("\" WHERE `account` = \""); buf.WriteString(u.Account)
+	buf.WriteString("\" AND `token` = \""); buf.WriteString(u.Token); buf.WriteString("\"");
+	return buf.String()
+}
+
+func update(user *User) error {
+	var sql = user.updateSql()
+	stmt, e := db.Prepare(sql)
+	if e != nil {
+		Error("Prepare update user", user, sql, e)
+		return e
+	}
+	defer stmt.Close()
+	result, e := stmt.Exec()
+	if e != nil {
+		Error("Execute update uesr", user, e)
+		return e
+	}
+	rows, e := result.RowsAffected()
+	if e != nil {
+		Warn("Get rows affected by update", user, e);
+		return e
+	}
+	Debug("Update user", user, rows)
 	return nil
 }
 

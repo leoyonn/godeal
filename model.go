@@ -15,7 +15,7 @@ type Jsonable interface {
 type Gender byte
 
 const (
-	Male Gender = iota
+	Male Gender = 1 + iota
 	Female
 )
 
